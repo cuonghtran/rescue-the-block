@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "CoreData", menuName = "Core Data")]
-public class CoreData : ScriptableObject
+namespace MainGame
 {
-    public int progress = 0;
-    public bool SoundOn = true;
-
-    public void ChangeFromSaveToCoreData(SaveData data)
+    [CreateAssetMenu(fileName = "CoreData", menuName = "Core Data")]
+    public class CoreData : ScriptableObject
     {
-        progress = data.progress;
-        SoundOn = data.SoundOn;
+        public int progress = 0;
+        public bool SoundOn = true;
+
+        public void ChangeFromSaveToCoreData(SaveData data)
+        {
+            progress = data.progress;
+            SoundOn = data.SoundOn;
+        }
     }
 }

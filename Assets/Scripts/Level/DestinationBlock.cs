@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 
-public class DestinationBlock : MonoBehaviour
+namespace MainGame
 {
-    private void OnTriggerEnter(Collider other)
+    public class DestinationBlock : MonoBehaviour
     {
-        if (other.CompareTag("Player") && Cube.Player.GetCubeState() == Cube.CubeState.Standing)
+        private void OnTriggerEnter(Collider other)
         {
-            Cube.Player.TriggerVictory();
+            if (other.CompareTag("Player") && Cube.Player.GetCubeState() == Cube.CubeState.Standing)
+            {
+                Cube.Player.TriggerVictory();
+            }
         }
     }
 }

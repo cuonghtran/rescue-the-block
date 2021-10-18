@@ -1,34 +1,38 @@
 ﻿using UnityEngine;
 using TMPro;
 
-public class LevelSelectHandler : MonoBehaviour
+namespace MainGame
 {
-    [Header("Data")]
-    [SerializeField] private CoreData coreData;
-
-    [Header("References")]
-    [SerializeField] private Transform levelPanel1;
-
-    // Start is called before the first frame update
-    void Start()
+    public class LevelSelectHandler : MonoBehaviour
     {
-        LoadLevelProgress();
-    }
+        [Header("Data")]
+        [SerializeField] private CoreData coreData;
 
-    void LoadLevelProgress()
-    {
-        foreach (Transform levelCard in levelPanel1)
+        [Header("References")]
+        [SerializeField] private Transform levelPanel1;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            TextMeshProUGUI lvlText = levelCard.GetChild(0).GetComponent<TextMeshProUGUI>();
-            if (int.Parse(lvlText.text) <= coreData.progress + 1)
+            LoadLevelProgress();
+        }
+
+        void LoadLevelProgress()
+        {
+            foreach (Transform levelCard in levelPanel1)
             {
-                LeanTween.alphaCanvas(levelCard.GetComponent<CanvasGroup>(), 1, 0);
-            }
-            else
-            {
-                LeanTween.alphaCanvas(levelCard.GetComponent<CanvasGroup>(), 0.3f, 0);
-                levelCard.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                TextMeshProUGUI lvlText = levelCard.GetChild(0).GetComponent<TextMeshProUGUI>();
+                if (int.Parse(lvlText.text) <= coreData.progress + 1)
+                {
+                    LeanTween.alphaCanvas(levelCard.GetComponent<CanvasGroup>(), 1, 0);
+                }
+                else
+                {
+                    LeanTween.alphaCanvas(levelCard.GetComponent<CanvasGroup>(), 0.3f, 0);
+                    levelCard.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                }
             }
         }
     }
+
 }

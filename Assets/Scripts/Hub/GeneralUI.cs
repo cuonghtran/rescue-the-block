@@ -1,78 +1,81 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class GeneralUI : MonoBehaviour
+namespace MainGame
 {
-    public static GeneralUI Instance;
-
-    [Header("UI")]
-    [SerializeField] private Transform openingPanel;
-    [SerializeField] private Transform levelSelectPanel;
-    [Header("Sounds")]
-    [SerializeField] private Image SoundButtonImage;
-    [SerializeField] private Sprite soundOnImage;
-    [SerializeField] private Sprite soundOffImage;
-
-    private CanvasGroup _openingPanelCG;
-    private CanvasGroup _levelSelectPanelCG;
-    private bool _soundOn;
-
-    private void Awake()
+    public class GeneralUI : MonoBehaviour
     {
-        if (Instance == null)
-            Instance = this;
-    }
+        public static GeneralUI Instance;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        _openingPanelCG = openingPanel.GetComponent<CanvasGroup>();
-        _levelSelectPanelCG = levelSelectPanel.GetComponent<CanvasGroup>();
+        [Header("UI")]
+        [SerializeField] private Transform openingPanel;
+        [SerializeField] private Transform levelSelectPanel;
+        [Header("Sounds")]
+        [SerializeField] private Image SoundButtonImage;
+        [SerializeField] private Sprite soundOnImage;
+        [SerializeField] private Sprite soundOffImage;
 
-        Invoke(nameof(Theme), 0.65f);
-    }
+        private CanvasGroup _openingPanelCG;
+        private CanvasGroup _levelSelectPanelCG;
+        private bool _soundOn;
 
-    void Theme()
-    {
-        AudioManager.SharedInstance.PlayTheme("Main_Theme");
-    }
+        private void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+        }
 
-    public void OnPlayButton_Click()
-    {
-        AudioManager.SharedInstance.Play("UIButton_Sound");
-        LeanTween.alphaCanvas(_openingPanelCG, 0, 0.25f).setOnComplete(DisplayLevels);
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
+            _openingPanelCG = openingPanel.GetComponent<CanvasGroup>();
+            _levelSelectPanelCG = levelSelectPanel.GetComponent<CanvasGroup>();
 
-    void DisplayLevels()
-    {
-        _openingPanelCG.blocksRaycasts = false;
-        LeanTween.alphaCanvas(_levelSelectPanelCG, 1, 0.25f).setOnComplete(() => _levelSelectPanelCG.blocksRaycasts = true);
-    }
+            Invoke(nameof(Theme), 0.65f);
+        }
 
-    public void OnReturnButton_Click()
-    {
-        AudioManager.SharedInstance.Play("UIButton_Sound");
-        LeanTween.alphaCanvas(_levelSelectPanelCG, 0, 0.25f).setOnComplete(DisplayMainPanel);
-    }
+        void Theme()
+        {
+            AudioManager.SharedInstance.PlayTheme("Main_Theme");
+        }
 
-    void DisplayMainPanel()
-    {
-        _levelSelectPanelCG.blocksRaycasts = false;
-        LeanTween.alphaCanvas(_openingPanelCG, 1, 0.25f).setOnComplete(() => _openingPanelCG.blocksRaycasts = true);
-    }
+        public void OnPlayButton_Click()
+        {
+            AudioManager.SharedInstance.Play("UIButton_Sound");
+            LeanTween.alphaCanvas(_openingPanelCG, 0, 0.25f).setOnComplete(DisplayLevels);
+        }
 
-    public void ToggleSound()
-    {
-        _soundOn = !_soundOn;
-        if (_soundOn)
-            SoundButtonImage.sprite = soundOnImage;
-        else SoundButtonImage.sprite = soundOffImage;
+        void DisplayLevels()
+        {
+            _openingPanelCG.blocksRaycasts = false;
+            LeanTween.alphaCanvas(_levelSelectPanelCG, 1, 0.25f).setOnComplete(() => _levelSelectPanelCG.blocksRaycasts = true);
+        }
 
-        GameManager.Instance.SetSound(_soundOn);
-    }   
+        public void OnReturnButton_Click()
+        {
+            AudioManager.SharedInstance.Play("UIButton_Sound");
+            LeanTween.alphaCanvas(_levelSelectPanelCG, 0, 0.25f).setOnComplete(DisplayMainPanel);
+        }
 
-    public void PlayLevel(string levelName)
-    {
-        SceneController.Instance.FadeAndLoadScene(ConstantsList.Scenes[levelName]);
+        void DisplayMainPanel()
+        {
+            _levelSelectPanelCG.blocksRaycasts = false;
+            LeanTween.alphaCanvas(_openingPanelCG, 1, 0.25f).setOnComplete(() => _openingPanelCG.blocksRaycasts = true);
+        }
+
+        public void ToggleSound()
+        {
+            _soundOn = !_soundOn;
+            if (_soundOn)
+                SoundButtonImage.sprite = soundOnImage;
+            else SoundButtonImage.sprite = soundOffImage;
+
+            GameManager.Instance.SetSound(_soundOn);
+        }
+
+        public void PlayLevel(string levelName)
+        {
+            SceneController.Instance.FadeAndLoadScene(ConstantsList.Scenes[levelName]);
+        }
     }
 }

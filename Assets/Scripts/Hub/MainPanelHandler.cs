@@ -1,62 +1,65 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class MainPanelHandler : MonoBehaviour
+namespace MainGame
 {
-    [SerializeField] private GameObject playPanel;
-    [SerializeField] private GameObject creditsPanel;
-    public float fadeTime = 0.35f;
-
-    private CanvasGroup _playPanelCG;
-    private CanvasGroup _creditsPanelCG;
-
-    // Start is called before the first frame update
-    void Start()
+    public class MainPanelHandler : MonoBehaviour
     {
-        _playPanelCG = playPanel.GetComponent<CanvasGroup>();
-        _creditsPanelCG = creditsPanel.GetComponent<CanvasGroup>();
-    }
+        [SerializeField] private GameObject playPanel;
+        [SerializeField] private GameObject creditsPanel;
+        public float fadeTime = 0.35f;
 
-    public void OnCreditsButton_Click()
-    {
-        AudioManager.SharedInstance.Play("UIButton_Sound");
-        StartCoroutine(SwitchPanel(_playPanelCG, _creditsPanelCG));
-    }
+        private CanvasGroup _playPanelCG;
+        private CanvasGroup _creditsPanelCG;
 
-    public void OnBackButton_Click()
-    {
-        AudioManager.SharedInstance.Play("UIButton_Sound");
-        StartCoroutine(SwitchPanel(_creditsPanelCG, _playPanelCG));
-    }
-
-    IEnumerator SwitchPanel(CanvasGroup fromPanel, CanvasGroup toPanel)
-    {
-        yield return StartCoroutine(FadeOut(fromPanel, fadeTime));
-
-        StartCoroutine(FadeIn(toPanel, fadeTime));
-    }
-
-    IEnumerator FadeOut(CanvasGroup canvasGrp, float fadeTime)
-    {
-        float elapsedTime = 0;
-        canvasGrp.blocksRaycasts = false;
-        while (elapsedTime < fadeTime)
+        // Start is called before the first frame update
+        void Start()
         {
-            elapsedTime += Time.deltaTime;
-            canvasGrp.alpha = 1.0f - Mathf.Clamp01(elapsedTime / fadeTime);
-            yield return null;
+            _playPanelCG = playPanel.GetComponent<CanvasGroup>();
+            _creditsPanelCG = creditsPanel.GetComponent<CanvasGroup>();
         }
-    }
 
-    IEnumerator FadeIn(CanvasGroup canvasGrp, float fadeTime)
-    {
-        float elapsedTime = 0;
-        while (elapsedTime < fadeTime)
+        public void OnCreditsButton_Click()
         {
-            elapsedTime += Time.deltaTime;
-            canvasGrp.alpha = Mathf.Clamp01(elapsedTime / fadeTime);
-            yield return null;
+            AudioManager.SharedInstance.Play("UIButton_Sound");
+            StartCoroutine(SwitchPanel(_playPanelCG, _creditsPanelCG));
         }
-        canvasGrp.blocksRaycasts = true;
+
+        public void OnBackButton_Click()
+        {
+            AudioManager.SharedInstance.Play("UIButton_Sound");
+            StartCoroutine(SwitchPanel(_creditsPanelCG, _playPanelCG));
+        }
+
+        IEnumerator SwitchPanel(CanvasGroup fromPanel, CanvasGroup toPanel)
+        {
+            yield return StartCoroutine(FadeOut(fromPanel, fadeTime));
+
+            StartCoroutine(FadeIn(toPanel, fadeTime));
+        }
+
+        IEnumerator FadeOut(CanvasGroup canvasGrp, float fadeTime)
+        {
+            float elapsedTime = 0;
+            canvasGrp.blocksRaycasts = false;
+            while (elapsedTime < fadeTime)
+            {
+                elapsedTime += Time.deltaTime;
+                canvasGrp.alpha = 1.0f - Mathf.Clamp01(elapsedTime / fadeTime);
+                yield return null;
+            }
+        }
+
+        IEnumerator FadeIn(CanvasGroup canvasGrp, float fadeTime)
+        {
+            float elapsedTime = 0;
+            while (elapsedTime < fadeTime)
+            {
+                elapsedTime += Time.deltaTime;
+                canvasGrp.alpha = Mathf.Clamp01(elapsedTime / fadeTime);
+                yield return null;
+            }
+            canvasGrp.blocksRaycasts = true;
+        }
     }
 }

@@ -1,12 +1,15 @@
-﻿[System.Serializable]
-public class SaveData
+﻿namespace MainGame
 {
-    public int progress;
-    public bool SoundOn;
-
-    public SaveData(CoreData data)
+    [System.Serializable]
+    public class SaveData
     {
-        this.progress = data.progress;
-        this.SoundOn = data.SoundOn;
+        public int progress;
+        public bool SoundOn;
+
+        public SaveData(CoreData data)
+        {
+            this.progress = data.progress;
+            this.SoundOn = data.SoundOn;
+        }
     }
 }

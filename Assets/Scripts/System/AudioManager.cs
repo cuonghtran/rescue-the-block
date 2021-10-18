@@ -2,70 +2,73 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour
+namespace MainGame
 {
-    public static AudioManager SharedInstance;
-
-    [SerializeField] private AudioMixerGroup mainMixerGroup;
-    [SerializeField] private Sound[] sounds;
-
-    private void Awake()
+    public class AudioManager : MonoBehaviour
     {
-        if (SharedInstance == null)
-            SharedInstance = this;
-        else
+        public static AudioManager SharedInstance;
+
+        [SerializeField] private AudioMixerGroup mainMixerGroup;
+        [SerializeField] private Sound[] sounds;
+
+        private void Awake()
         {
-            Destroy(this.gameObject);
-            return;
+            if (SharedInstance == null)
+                SharedInstance = this;
+            else
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+
+            DontDestroyOnLoad(gameObject);
+
+            foreach (Sound s in sounds)
+            {
+                GameObject obj = new GameObject();
+                obj.transform.parent = transform;
+                obj.name = s.name;
+                s.source = obj.AddComponent<AudioSource>();
+                s.source.outputAudioMixerGroup = mainMixerGroup;
+                s.source.clip = s.clip;
+
+                s.source.volume = s.volume;
+                s.source.pitch = s.pitch;
+                s.source.loop = s.loop;
+            }
         }
 
-        DontDestroyOnLoad(gameObject);
-
-        foreach (Sound s in sounds)
+        public void PlayTheme(string name)
         {
-            GameObject obj = new GameObject();
-            obj.transform.parent = transform;
-            obj.name = s.name;
-            s.source = obj.AddComponent<AudioSource>();
-            s.source.outputAudioMixerGroup = mainMixerGroup;
-            s.source.clip = s.clip;
-
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
+            Sound s = Array.Find(sounds, sound => sound.name == name);
+            if (s == null)
+                return;
+            if (!s.source.isPlaying)
+                s.source.Play();
         }
-    }
 
-    public void PlayTheme(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-            return;
-        if (!s.source.isPlaying)
+        public void Play(string name)
+        {
+            Sound s = Array.Find(sounds, sound => sound.name == name);
+            if (s == null)
+                return;
             s.source.Play();
-    }
+        }
 
-    public void Play(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-            return;
-        s.source.Play();
-    }
+        public void PlayOneShot(string name)
+        {
+            Sound s = Array.Find(sounds, sound => sound.name == name);
+            if (s == null)
+                return;
+            s.source.PlayOneShot(s.clip);
+        }
 
-    public void PlayOneShot(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-            return;
-        s.source.PlayOneShot(s.clip);
-    }
-
-    public void Stop(string name)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
-            return;
-        s.source.Stop();
+        public void Stop(string name)
+        {
+            Sound s = Array.Find(sounds, sound => sound.name == name);
+            if (s == null)
+                return;
+            s.source.Stop();
+        }
     }
 }

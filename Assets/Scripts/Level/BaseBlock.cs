@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public class BaseBlock : MonoBehaviour
+namespace MainGame
 {
-    
+    public class BaseBlock : MonoBehaviour
+    {
+
+    }
 }

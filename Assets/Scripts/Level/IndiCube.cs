@@ -1,26 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class IndiCube : MonoBehaviour
+namespace MainGame
 {
-    [SerializeField] private bool isGrounded = false;
-
-    private void OnTriggerEnter(Collider other)
+    public class IndiCube : MonoBehaviour
     {
-        if (other.CompareTag("Terrain"))
+        [SerializeField] private bool isGrounded = false;
+
+        private void OnTriggerEnter(Collider other)
         {
-            isGrounded = true;
+            if (other.CompareTag("Terrain"))
+            {
+                isGrounded = true;
+            }
         }
-    }
 
-    public void ResetStatus()
-    {
-        isGrounded = false;
-    }
+        public void ResetStatus()
+        {
+            isGrounded = false;
+        }
 
-    public bool IsGrounded()
-    {
-        return isGrounded;
+        public bool IsGrounded()
+        {
+            return isGrounded;
+        }
     }
 }

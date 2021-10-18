@@ -2,87 +2,90 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class GameManager : MonoBehaviour
+namespace MainGame
 {
-    public static GameManager Instance;
-
-    [SerializeField] private CoreData coreData;
-    [SerializeField] private AudioMixerGroup mainMixerGroup;
-    private readonly string firstPlay = "FirstPlay";
-    private readonly string soundTogglePref = "SoundToggle";
-
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if (Instance == null)
-            Instance = this;
-        else
+        public static GameManager Instance;
+
+        [SerializeField] private CoreData coreData;
+        [SerializeField] private AudioMixerGroup mainMixerGroup;
+        private readonly string firstPlay = "FirstPlay";
+        private readonly string soundTogglePref = "SoundToggle";
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance == null)
+                Instance = this;
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Application.targetFrameRate = 60;
         }
 
-        Application.targetFrameRate = 60;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        InitDataOnOpeningGame();
-    }
-
-    void InitDataOnOpeningGame()
-    {
-        try
+        // Start is called before the first frame update
+        void Start()
         {
-            MusicSettings();
-            SaveLoadSystem.LoadGame(coreData);
+            InitDataOnOpeningGame();
         }
-        catch (FileNotFoundException e)
+
+        void InitDataOnOpeningGame()
         {
-            InitPlayerData();
-            FirstPlayMusicSettings();
+            try
+            {
+                MusicSettings();
+                SaveLoadSystem.LoadGame(coreData);
+            }
+            catch (FileNotFoundException e)
+            {
+                InitPlayerData();
+                FirstPlayMusicSettings();
+            }
         }
-    }
 
-    void InitPlayerData()
-    {
-        coreData.progress = 0;
-        coreData.SoundOn = true;
-    }
-
-    public void FirstPlayMusicSettings()
-    {
-        coreData.SoundOn = true;
-        mainMixerGroup.audioMixer.SetFloat("Volume", 0);
-        PlayerPrefs.SetInt(soundTogglePref, 1);
-    }
-
-    public void MusicSettings()
-    {
-        var soundValue = coreData.SoundOn;
-        if (soundValue)
+        void InitPlayerData()
         {
-            mainMixerGroup.audioMixer.SetFloat("Volume", 0);
+            coreData.progress = 0;
             coreData.SoundOn = true;
         }
-        else
-        {
-            mainMixerGroup.audioMixer.SetFloat("Volume", -80);
-            coreData.SoundOn = false;
-        }
-    }
 
-    public void SetSound(bool soundOn)
-    {
-        if (soundOn)
+        public void FirstPlayMusicSettings()
         {
-            mainMixerGroup.audioMixer.SetFloat("Volume", 0);
             coreData.SoundOn = true;
+            mainMixerGroup.audioMixer.SetFloat("Volume", 0);
+            PlayerPrefs.SetInt(soundTogglePref, 1);
         }
-        else
+
+        public void MusicSettings()
         {
-            mainMixerGroup.audioMixer.SetFloat("Volume", -80);
-            coreData.SoundOn = false;
+            var soundValue = coreData.SoundOn;
+            if (soundValue)
+            {
+                mainMixerGroup.audioMixer.SetFloat("Volume", 0);
+                coreData.SoundOn = true;
+            }
+            else
+            {
+                mainMixerGroup.audioMixer.SetFloat("Volume", -80);
+                coreData.SoundOn = false;
+            }
+        }
+
+        public void SetSound(bool soundOn)
+        {
+            if (soundOn)
+            {
+                mainMixerGroup.audioMixer.SetFloat("Volume", 0);
+                coreData.SoundOn = true;
+            }
+            else
+            {
+                mainMixerGroup.audioMixer.SetFloat("Volume", -80);
+                coreData.SoundOn = false;
+            }
         }
     }
 }

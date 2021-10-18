@@ -1,45 +1,48 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class CrackBlock : MonoBehaviour
+namespace MainGame
 {
-    public float dropSpeed = 5;
-
-    private bool _isTriggered;
-    private bool _dropFlag;
-
-    private void OnTriggerEnter(Collider other)
+    public class CrackBlock : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
-        {
-            _isTriggered = true;
-        }
-            
-    }
+        public float dropSpeed = 5;
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        private bool _isTriggered;
+        private bool _dropFlag;
+
+        private void OnTriggerEnter(Collider other)
         {
-            if (_isTriggered && !Cube.Player.CheckDead())
+            if (other.CompareTag("Player"))
             {
-                _dropFlag = true;
-                StartCoroutine(HideObject());
+                _isTriggered = true;
+            }
+
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                if (_isTriggered && !Cube.Player.CheckDead())
+                {
+                    _dropFlag = true;
+                    StartCoroutine(HideObject());
+                }
             }
         }
-    }
 
-    private void Update()
-    {
-        if (_dropFlag)
+        private void Update()
         {
-            transform.Translate(Vector3.down * dropSpeed * Time.deltaTime);
+            if (_dropFlag)
+            {
+                transform.Translate(Vector3.down * dropSpeed * Time.deltaTime);
+            }
         }
-    }
 
-    IEnumerator HideObject()
-    {
-        yield return new WaitForSeconds(1.5f);
-        gameObject.SetActive(false);
+        IEnumerator HideObject()
+        {
+            yield return new WaitForSeconds(1.5f);
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -2,31 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Button : MonoBehaviour
+namespace MainGame
 {
-    [SerializeField] private List<GameObject> linkedBlocks;
-
-    private float _yPressedLoc = 0.28f;
-    private float _duration = 0.1f;
-    private bool _isTriggered = false;
-
-    private void OnTriggerEnter(Collider other)
+    public class Button : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
+        [SerializeField] private List<GameObject> linkedBlocks;
+
+        private float _yPressedLoc = 0.28f;
+        private float _duration = 0.1f;
+        private bool _isTriggered = false;
+
+        private void OnTriggerEnter(Collider other)
         {
-            if (!_isTriggered)
+            if (other.CompareTag("Player"))
             {
-                AudioManager.SharedInstance.Play("Button_Sound");
-                StartCoroutine(PressButton());
+                if (!_isTriggered)
+                {
+                    AudioManager.SharedInstance.Play("Button_Sound");
+                    StartCoroutine(PressButton());
+                }
             }
         }
-    }
 
-    IEnumerator PressButton()
-    {
-        _isTriggered = true;
-        LeanTween.moveY(gameObject, _yPressedLoc, _duration);
-        yield return new WaitForSeconds(_duration);
-        linkedBlocks.ForEach(x => x.SetActive(true));
+        IEnumerator PressButton()
+        {
+            _isTriggered = true;
+            LeanTween.moveY(gameObject, _yPressedLoc, _duration);
+            yield return new WaitForSeconds(_duration);
+            linkedBlocks.ForEach(x => x.SetActive(true));
+        }
     }
 }

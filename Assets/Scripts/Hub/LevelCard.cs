@@ -2,12 +2,16 @@
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class LevelCard : MonoBehaviour, IPointerDownHandler
+namespace MainGame
 {
-    public void OnPointerDown(PointerEventData eventData)
+    public class LevelCard : MonoBehaviour, IPointerDownHandler
     {
-        AudioManager.SharedInstance.Play("UIButton_Sound");
-        string selectedLevelIndex = gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
-        GeneralUI.Instance.PlayLevel(selectedLevelIndex.Trim());
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            AudioManager.SharedInstance.Play("UIButton_Sound");
+            string selectedLevelIndex = gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text;
+            GeneralUI.Instance.PlayLevel(selectedLevelIndex.Trim());
+        }
     }
 }
+
