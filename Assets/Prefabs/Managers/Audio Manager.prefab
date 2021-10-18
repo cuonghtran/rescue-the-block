@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5443695016303413847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5443695016303413840}
+  - component: {fileID: 5443695016303413841}
+  - component: {fileID: 4171450488655634076}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5443695016303413840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5443695016303413847}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5443695016303413841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5443695016303413847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5fb0bf8956e44f15b0d3568a3cfc9b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMixerGroup: {fileID: 24300002, guid: c6f105d6ba0c648b7b839a23fa1507dd, type: 2}
+  sounds:
+  - clip: {fileID: 8300000, guid: c4f6b37083b674e8eb5dff1872bcd480, type: 3}
+    source: {fileID: 0}
+    name: Main_Theme
+    volume: 0.03
+    pitch: 1
+    loop: 1
+  - clip: {fileID: 8300000, guid: 9e6c59aaa444142b18ce8e360e005efb, type: 3}
+    source: {fileID: 0}
+    name: Boulder_Collide_Sound
+    volume: 0
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: d5b01d423e1674e90b2aeb1f71811e1b, type: 3}
+    source: {fileID: 0}
+    name: Button_Sound
+    volume: 0.07
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: 226bcfa622912467bab00114d890488f, type: 3}
+    source: {fileID: 0}
+    name: Roll_Sound
+    volume: 0.05
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: 36a4d4a48ce334480abff4169bfc30b5, type: 3}
+    source: {fileID: 0}
+    name: UIButton_Sound
+    volume: 0.05
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: d8e37b79d26264db4b91a1656d72a7b6, type: 3}
+    source: {fileID: 0}
+    name: Victory_Sound
+    volume: 0.08
+    pitch: 1
+    loop: 0
+  - clip: {fileID: 8300000, guid: 6ce288ad9969a4f82b2493f2dbc9e861, type: 3}
+    source: {fileID: 0}
+    name: Wall_Button_Sound
+    volume: 0.07
+    pitch: 1
+    loop: 0
+--- !u!81 &4171450488655634076
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5443695016303413847}
+  m_Enabled: 1
